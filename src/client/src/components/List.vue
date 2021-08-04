@@ -53,10 +53,13 @@
 </template>
 
 <script>
-const server = 'http://localhost:5000/'
+//const server = 'http://3.112.42.201/'
+//const server = location.protocol + '//' + location.host + ':5000' + '/'
+//const server = 'http://localhost:5000/'
 
 import axios from 'axios'
 import About from '../views/About'
+import backend from '../config/backend'
 
 export default {
   name: 'List',
@@ -69,29 +72,22 @@ export default {
   components: About,
   created: function() {
         String.prototype.toHiragana = function(){
-          return this.replace(/[\u30a1-\u30f6]/g, match => {
+          return this
+/*           return this.replace(/[\u30a1-\u30f6]/g, match => {
             let chr = match.charCodeAt(0) - 0x60;
             return String.fromCharCode(chr);
-          })
+          }) */
         }
-        axios.get(server + 'pokeapi/')
+        axios.get(backend.URL + 'pokeapi/')
         .then(response => {
           this.myData = response.data.map(item =>{
-            item.thumbnail = server + 'assets/thumbnails/' + ('000' + item.id).slice(-3) + item.name.english + '.png'
-            item.image = server + 'assets/images/' + ('000' + item.id).slice(-3) + item.name.english + '.png'
+            item.thumbnail = backend.URL + 'assets/thumbnails/' + ('000' + item.id).slice(-3) + item.name.english + '.png'
+            item.image = backend.URL + 'assets/images/' + ('000' + item.id).slice(-3) + item.name.english + '.png'
             item.name.japanese = item.name.japanese.toHiragana()
             return item 
           })
-          // this.myData = Array()
-          // for (var i = 0; i < response.data.length; i++) {
-          //   let item = response.data[i]
-          //   item.thumbnail = server + 'assets/thumbnails/' + ('000' + item.id).slice(-3) + item.name.english + '.png'
-          //   item.image = server + 'assets/images/' + ('000' + item.id).slice(-3) + item.name.english + '.png'
-          //   item.name.japanese = item.name.japanese.toHiragana()
-          //   this.myData[i] = item
-          // }
         })
-        .error(error => {
+        .catch(error => {
           alert(error)
         })
         // fetch('http://localhost:5000/pokeapi/')
@@ -112,19 +108,19 @@ export default {
       return `https://www.pkparaiso.com/imagenes/shuffle/sprites/${('000' + item.id).slice(-3)}.png`
     },
     createImagelUrl: function(item){
-      return server + 'assets/thumbnails/' + ('000' + item.id).slice(-3) + item.name.english + '.png'
+      return backend.URL + 'assets/thumbnails/' + ('000' + item.id).slice(-3) + item.name.english + '.png'
     },
     changeType: function(event){
       const type = event.target.value
       
       this.myData = null
-      axios.get(server + 'pokeapi/')
+      axios.get(backend.URL + 'pokeapi/')
       .then(response => {
         this.myData = response.data
                       .filter(item => (type === "All" || item.type.indexOf(type) > -1))
                       .map(item => {
-                        item.thumbnail = server + 'assets/thumbnails/' + ('000' + item.id).slice(-3) + item.name.english + '.png'
-                        item.image = server + 'assets/images/' + ('000' + item.id).slice(-3) + item.name.english + '.png'
+                        item.thumbnail = backend.URL + 'assets/thumbnails/' + ('000' + item.id).slice(-3) + item.name.english + '.png'
+                        item.image = backend.URL + 'assets/images/' + ('000' + item.id).slice(-3) + item.name.english + '.png'
                         item.name.japanese = item.name.japanese.toHiragana()
                         return item 
                       })
