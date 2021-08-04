@@ -1,3 +1,3 @@
 export default {
-    URL: 'http://localhost:5000/'
+    URL: 'http://52.196.44.57/pokeapi'
 }
