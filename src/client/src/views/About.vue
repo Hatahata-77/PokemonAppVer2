@@ -72,7 +72,7 @@ export default {
       //   return String.fromCharCode(chr)
       // })
     }
-    axios.get(backend.URL + 'pokeapi/' + this.$route.params.id)
+    axios.get(backend.URL + this.$route.params.id)
     .then(response => {
       this.item = response.data;
       const text = this.item.name.japanese.toHiragana() + ". " + this.item.type.join() + 'タイプ'
@@ -90,7 +90,7 @@ export default {
   },
   methods: {
     createImagelUrl: function(item){
-      return backend.URL + 'assets/images/' + ('000' + item.id).slice(-3) + item.name.english + '.png'
+      return window.location.protocol + '//' + window.location.host  + '/assets/images/' + ('000' + item.id).slice(-3) + item.name.english + '.png'
     }
   }
 }

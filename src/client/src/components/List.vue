@@ -78,7 +78,7 @@ export default {
             return String.fromCharCode(chr);
           }) */
         }
-        axios.get(backend.URL + 'pokeapi/')
+        axios.get(backend.URL)
         .then(response => {
           this.myData = response.data.map(item =>{
             item.thumbnail = backend.URL + 'assets/thumbnails/' + ('000' + item.id).slice(-3) + item.name.english + '.png'
@@ -114,7 +114,7 @@ export default {
       const type = event.target.value
       
       this.myData = null
-      axios.get(backend.URL + 'pokeapi/')
+      axios.get(backend.URL)
       .then(response => {
         this.myData = response.data
                       .filter(item => (type === "All" || item.type.indexOf(type) > -1))
